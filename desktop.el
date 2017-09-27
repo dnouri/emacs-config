@@ -1,29 +1,38 @@
 (set-scroll-bar-mode 'left)
 
+;; Fonts
+(set-frame-font "Monospace-10")
+(set-frame-font "Monospace-14")
+(add-to-list 'default-frame-alist '(font . "Monospace-14"))
+(defun small-fonts ()
+  "Small fonts"
+  (interactive)
+  (set-frame-font "Monospace-10"))
+(defun large-fonts ()
+  "Large fonts"
+  (interactive)
+  (set-frame-font "Monospace-14"))
+(defun super-large-fonts ()
+  "Super large fonts"
+  (interactive)
+  (set-frame-font "Monospace-25"))
+(global-set-key [f5] 'small-fonts)
+(global-set-key [f6] 'large-fonts)
+(global-set-key [f7] 'super-large-fonts)
 
-;; shell mode -----------------------------------------------------------------
+;; shell mode
 (setq ansi-color-names-vector ; better contrast colors
       ["black" "red4" "green4" "yellow4"
        "blue3" "magenta4" "cyan4" "white"])
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-
 ;; hl-line mode and colour
 (global-hl-line-mode 1)
-(set-face-background 'hl-line "#FFE")
-
+;; (set-face-background 'hl-line "#FFE")
 
 ;; http://stackoverflow.com/questions/704616
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-
-;; Coloring for diff 
-(custom-set-faces
- '(diff-added ((t (:foreground "Dark Green"))) 'now)
- '(diff-removed ((t (:foreground "Dark Red"))) 'now)
- )
-
 
 ;; http://www.emacswiki.org/emacs/DynamicAbbreviations
 (global-set-key (kbd "C-<tab>") 'dabbrev-expand)
@@ -41,7 +50,6 @@
   (if (equal output "t\n")
       (message "Not starting server, one instance already running...")
     (server-start)))
-
 (defun ivan-server-start ()
   "Call `server-start' only if no other accessible Emacs process
  is already acting as a server for client processes. Adapted from
@@ -51,9 +59,7 @@
                                        "--eval" "t")
                         'ivan-server-start-filter-function)))
 (ivan-server-start)
-
 ;;(add-hook 'after-init-hook 'server-start)
-
 (add-hook 'server-switch-hook
 	  (lambda nil
 	    (let ((server-buf (current-buffer)))
@@ -61,45 +67,17 @@
 	      (switch-to-buffer-other-frame server-buf))))
 (add-hook 'server-done-hook 'delete-frame)
 
-
-;; Customized Key Bindings ----------------------------------------------------
-;; Euro: C-M-e
-(defun insert-euro-sign ()
-  (interactive)
-  (insert (make-char 'latin-iso8859-15 #xa4))
-)
-(global-set-key (kbd "C-M-e") 'insert-euro-sign)
-
-
-;; SuperCollider, see http://space.k-hornz.de:8888/space/uploads/scel-tut.txt
-;; (require 'sclang)
-
-;; (eval-after-load "w3m"
-;;  '(progn
-;;  (define-key w3m-mode-map [left] 'backward-char)
-;;  (define-key w3m-mode-map [right] 'forward-char)
-;;  (define-key w3m-mode-map [up] 'previous-line)
-;;  (define-key w3m-mode-map [down] 'next-line)))
-
-;; (add-hook 'sclang-mode-hook
-;;     (lambda () (setq indent-tabs-mode nil))
-;;     )
-
-
 ;; ERC, http://www.emacswiki.org/cgi-bin/wiki/ErcSound
 (add-hook 'erc-text-matched-hook 'erc-beep-on-match)
 (setq erc-beep-match-types '(current-nick keyword))
 (setq erc-auto-query 'window-noselect)
 (setq erc-autojoin-channels-alist
       '(("freenode.net"
-         "#kotti" "#pyramid" "##machinelearning" "#pydata"
+         "#kotti" "#pyramid" "#pydata"
          )))
 (require 'erc-match)
-(setq erc-keywords '("Kotti" "kotti"))
 (erc-match-mode t)
 (setq erc-server-send-ping-timeout nil)
-
-
 ;; http://www.emacswiki.org/emacs/ErcPageMe
 (require 'notifications)
 (defun erc-global-notify (match-type nick message)
@@ -109,11 +87,7 @@
    :body message
    :app-icon "/usr/share/notify-osd/icons/gnome/scalable/status/notification-message-im.svg"
    :urgency 'low))
-
 (add-hook 'erc-text-matched-hook 'erc-global-notify)
-
-
-
 ;; http://hexmode.openweblog.com/472367.html
 (defvar mah/erc-nick-notify-last '(0 0 0))
 (defvar mah/erc-nick-ntify-delay '(0 5 0))
@@ -123,7 +97,6 @@
 (defvar mah/erc-nick-notify-timeout 10000)
 (defvar mah/erc-nick-notify-urgency "low");
 (defvar mah/erc-nick-notify-category "im.received");
-
 (defun mah/erc-nick-notify ()
   "Notify me when my nick shows up.  This function should be in
 the insert-post-hook."
@@ -157,15 +130,5 @@ the insert-post-hook."
                                  "'" (buffer-name) "'"
                                  " '" msg "'")))))))
 
-;;(add-hook 'erc-insert-pre-hook 'mah/erc-nick-notify)
-
-;; jabber.el: http://www.emacswiki.org/emacs/JabberEl
-;; Message alert hooks
-;; (require 'jabber)
-;; (define-jabber-alert echo "Show a message in the echo area"
-;;   (lambda (msg)
-;;     ()))
-
-
-
-(load "~/.emacs.d/mu4e")
+(if (file-exists-p "~/.emacs.d/mu4e.el")
+    (load "~/.emacs.d/mu4e"))
