@@ -23,6 +23,8 @@
    t)
   (package-initialize))
 
+(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
+
 ;; Misc customization
 (tool-bar-mode -1)
 (setq frame-title-format "%b - Emacs")
