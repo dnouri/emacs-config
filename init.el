@@ -64,6 +64,7 @@
 (require 'ido)
 (ido-mode 1)
 (setq ido-show-dot-for-dired 1)
+(setq ido-enable-flex-matching t)
 
 ;; Set environment variable for git
 (setenv "GIT_PAGER" "cat")
