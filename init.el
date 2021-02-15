@@ -15,13 +15,10 @@
          load-path)))
 
 ;; package
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list
-   'package-archives
-   '("melpa" . "http://melpa.org/packages/")
-   t)
-  (package-initialize))
+(require 'package)
+(add-to-list 'package-archives
+             '("MELPA Stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
 
 (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
 
@@ -125,10 +122,12 @@
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
 (global-set-key "\C-cb" 'org-iswitchb)
-(setq org-log-done t)
+;; (setq org-log-done t)
 ;; (add-hook 'org-mode-hook #'visual-line-mode)
 ;; (add-hook 'org-mode-hook #'auto-fill-mode)
-(setq org-startup-indented t)
+;; (setq org-startup-indented t)
+
+(add-hook 'js2-mode-hook (lambda () (electric-layout-mode -1)))
 
 (if (file-exists-p "~/.emacs.d/desktop.el")
     (load "~/.emacs.d/desktop"))
