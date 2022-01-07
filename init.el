@@ -76,6 +76,15 @@
 (add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
 (add-to-list 'interpreter-mode-alist '("python" . python-mode))
 
+(setq
+    gdb-many-windows t ;; use gdb-many-windows by default
+    gdb-show-main    t ;; Non-nil means display source file containing the main routine at startup
+ )
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode 'c++-mode 'asm-mode)
+              (ggtags-mode 1))))
+
 ;; Python pdb.set_trace() macro
 (fset 'pdb-set
       "import pdb; pdb.set_trace()")
@@ -128,6 +137,8 @@
 ;; (setq org-startup-indented t)
 
 (add-hook 'js2-mode-hook (lambda () (electric-layout-mode -1)))
+
+(setq-default c-basic-offset 4)
 
 (if (file-exists-p "~/.emacs.d/desktop.el")
     (load "~/.emacs.d/desktop"))
