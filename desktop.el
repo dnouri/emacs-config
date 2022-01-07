@@ -8,17 +8,22 @@
   "Small fonts"
   (interactive)
   (set-frame-font "Monospace-10"))
+(defun medium-fonts ()
+  "Medium fonts"
+  (interactive)
+  (set-frame-font "Cascadia Mono-13"))
 (defun large-fonts ()
   "Large fonts"
   (interactive)
-  (set-frame-font "Monospace-14"))
+  (set-frame-font "Cascadia Mono-14"))
 (defun super-large-fonts ()
   "Super large fonts"
   (interactive)
-  (set-frame-font "Monospace-25"))
+  (set-frame-font "Cascadia Mono-22"))
 (global-set-key [f5] 'small-fonts)
-(global-set-key [f6] 'large-fonts)
-(global-set-key [f7] 'super-large-fonts)
+(global-set-key [f6] 'medium-fonts)
+(global-set-key [f7] 'large-fonts)
+(global-set-key [f8] 'super-large-fonts)
 
 ;; shell mode
 (setq ansi-color-names-vector ; better contrast colors
