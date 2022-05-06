@@ -20,6 +20,24 @@
   "Super large fonts"
   (interactive)
   (set-frame-font "Cascadia Mono-22"))
+
+(defun small-fonts ()
+  "Small fonts"
+  (interactive)
+  (set-frame-font "Monospace-10"))
+(defun medium-fonts ()
+  "Medium fonts"
+  (interactive)
+  (set-frame-font "Comic Code Daniel-12"))
+(defun large-fonts ()
+  "Large fonts"
+  (interactive)
+  (set-frame-font "Comic Code Daniel-13"))
+(defun super-large-fonts ()
+  "Super large fonts"
+  (interactive)
+  (set-frame-font "Comic Code Daniel-22"))
+
 (global-set-key [f5] 'small-fonts)
 (global-set-key [f6] 'medium-fonts)
 (global-set-key [f7] 'large-fonts)
@@ -35,9 +53,9 @@
 (global-hl-line-mode 1)
 ;; (set-face-background 'hl-line "#FFE")
 
-;; http://stackoverflow.com/questions/704616
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+;; ;; http://stackoverflow.com/questions/704616
+;; (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+;; (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; http://www.emacswiki.org/emacs/DynamicAbbreviations
 (global-set-key (kbd "C-<tab>") 'dabbrev-expand)
