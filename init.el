@@ -18,6 +18,8 @@
 (require 'package)
 (add-to-list 'package-archives
              '("MELPA Stable" . "https://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 (byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
@@ -68,13 +70,17 @@
 
 ;; Magit https://magit.vc/manual/magit/Getting-started.html#Getting-started
 (global-set-key (kbd "C-x g") 'magit-status)
-(global-magit-file-mode 1)
 
 ;; python-mode.el                                                               
-(require 'python-mode)
-(autoload 'python-mode "python-mode" "Python Mode." t)
-(add-to-list 'auto-mode-alist '("\\.py\\'" . python-mode))
-(add-to-list 'interpreter-mode-alist '("python" . python-mode))
+(add-hook 'python-mode-hook
+          (lambda ()
+            (setq python-indent-def-block-scale 1)))
+(defun my-shell-mode-hook ()
+  (add-hook
+   'comint-output-filter-functions
+   'python-pdbtrack-comint-output-filter-function t))
+(add-hook 'shell-mode-hook 'my-shell-mode-hook)
+
 
 (setq
     gdb-many-windows t ;; use gdb-many-windows by default
@@ -87,15 +93,44 @@
 
 ;; Python pdb.set_trace() macro
 (fset 'pdb-set
-      "import pdb; pdb.set_trace()")
+      "breakpoint()")
 (global-set-key "\M-t" 'pdb-set)
 
 ;; http://www.flycheck.org/en/latest/user/installation.html
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
-;;(add-hook 'after-init-hook #'global-flycheck-mode)
-(add-hook 'python-mode-hook 'flycheck-mode)
+;; Ruff
+(require 'flycheck)
+;; From https://github.com/flycheck/flycheck/issues/1974#issuecomment-1343495202
+(setq flycheck-python-ruff-executable "/home/daniel/lib/venv/bin/ruff")
+(flycheck-define-checker python-ruff
+  "A Python syntax and style checker using the ruff utility.
+To override the path to the ruff executable, set
+`flycheck-python-ruff-executable'.
+See URL `http://pypi.python.org/pypi/ruff'."
+  :command ("ruff"
+            "--format=text"
+            (eval (when buffer-file-name
+                    (concat "--stdin-filename=" buffer-file-name)))
+            "-")
+  :standard-input t
+  :error-filter (lambda (errors)
+                  (let ((errors (flycheck-sanitize-errors errors)))
+                    (seq-map #'flycheck-flake8-fix-error-level errors)))
+  :error-patterns
+  ((warning line-start
+            (file-name) ":" line ":" (optional column ":") " "
+            (id (one-or-more (any alpha)) (one-or-more digit)) " "
+            (message (one-or-more not-newline))
+            line-end))
+  :modes python-mode)
+
+;; Use something adapted to your config to add `python-ruff' to `flycheck-checkers'
+;; This is an MVP example:
+(setq python-mode-hook
+      (list (defun my-python-hook ()
+              (unless (bound-and-true-p org-src-mode)
+                (when (buffer-file-name)
+                  (setq-local flycheck-checkers '(python-ruff))
+                  (flycheck-mode))))))
 
 ;; Tramp
 (require 'tramp)
