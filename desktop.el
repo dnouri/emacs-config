@@ -1,47 +1,45 @@
 (set-scroll-bar-mode 'left)
 
+;; Theme
+(load-theme 'doom-pine t)
+
 ;; Fonts
 (set-frame-font "Monospace-10")
 (set-frame-font "Monospace-14")
 (add-to-list 'default-frame-alist '(font . "Monospace-14"))
-(defun small-fonts ()
-  "Small fonts"
-  (interactive)
-  (set-frame-font "Monospace-10"))
-(defun medium-fonts ()
+(defun medium-fonts1 ()
   "Medium fonts"
   (interactive)
   (set-frame-font "Cascadia Mono-13"))
-(defun large-fonts ()
+(defun large-fonts1 ()
   "Large fonts"
   (interactive)
   (set-frame-font "Cascadia Mono-14"))
-(defun super-large-fonts ()
+(defun super-large-fonts1 ()
   "Super large fonts"
   (interactive)
   (set-frame-font "Cascadia Mono-22"))
 
-(defun small-fonts ()
-  "Small fonts"
-  (interactive)
-  (set-frame-font "Monospace-10"))
-(defun medium-fonts ()
+(global-set-key [s-f7] 'medium-fonts1)
+(global-set-key [s-f8] 'large-fonts1)
+(global-set-key [s-f9] 'super-large-fonts1)
+
+(defun medium-fonts2 ()
   "Medium fonts"
   (interactive)
   (set-frame-font "Comic Code Daniel-12"))
-(defun large-fonts ()
+(defun large-fonts2 ()
   "Large fonts"
   (interactive)
   (set-frame-font "Comic Code Daniel-13"))
-(defun super-large-fonts ()
+(defun super-large-fonts2 ()
   "Super large fonts"
   (interactive)
   (set-frame-font "Comic Code Daniel-22"))
 
-(global-set-key [f5] 'small-fonts)
-(global-set-key [f6] 'medium-fonts)
-(global-set-key [f7] 'large-fonts)
-(global-set-key [f8] 'super-large-fonts)
+(global-set-key [f7] 'medium-fonts2)
+(global-set-key [f8] 'large-fonts2)
+(global-set-key [f9] 'super-large-fonts2)
 
 ;; shell mode
 (setq ansi-color-names-vector ; better contrast colors
