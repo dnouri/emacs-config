@@ -72,15 +72,9 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 
 ;; python-mode.el                                                               
-(add-hook 'python-mode-hook
-          (lambda ()
-            (setq python-indent-def-block-scale 1)))
-(defun my-shell-mode-hook ()
-  (add-hook
-   'comint-output-filter-functions
-   'python-pdbtrack-comint-output-filter-function t))
-(add-hook 'shell-mode-hook 'my-shell-mode-hook)
-
+(require 'python)
+(add-hook 'comint-output-filter-functions 'python-pdbtrack-comint-output-filter-function)
+(setq python-indent-def-block-scale 1)
 
 (setq
     gdb-many-windows t ;; use gdb-many-windows by default
