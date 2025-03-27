@@ -10,28 +10,45 @@
 (defun medium-fonts1 ()
   "Medium fonts"
   (interactive)
-  (set-frame-font "Cascadia Mono-13"))
+  (set-frame-font "Cascadia Mono-14"))
 (defun large-fonts1 ()
   "Large fonts"
   (interactive)
-  (set-frame-font "Cascadia Mono-14"))
+  (set-frame-font "Cascadia Mono-16"))
 (defun super-large-fonts1 ()
   "Super large fonts"
   (interactive)
   (set-frame-font "Cascadia Mono-22"))
 
-(global-set-key [s-f7] 'medium-fonts1)
-(global-set-key [s-f8] 'large-fonts1)
-(global-set-key [s-f9] 'super-large-fonts1)
+(global-set-key [M-f7] 'medium-fonts1)
+(global-set-key [M-f8] 'large-fonts1)
+(global-set-key [M-f9] 'super-large-fonts1)
 
 (defun medium-fonts2 ()
   "Medium fonts"
   (interactive)
-  (set-frame-font "Comic Code Daniel-12"))
+  (set-frame-font "Comic Code Daniel-14"))
 (defun large-fonts2 ()
   "Large fonts"
   (interactive)
-  (set-frame-font "Comic Code Daniel-13"))
+  (set-frame-font "Comic Code Daniel-16"))
+(defun super-large-fonts2 ()
+  "Super large fonts"
+  (interactive)
+  (set-frame-font "Comic Code Daniel-22"))
+
+(global-set-key [f7] 'medium-fonts2)
+(global-set-key [f8] 'large-fonts2)
+(global-set-key [f9] 'super-large-fonts2)
+
+(defun medium-fonts2 ()
+  "Medium fonts"
+  (interactive)
+  (set-frame-font "Comic Code Daniel-14"))
+(defun large-fonts2 ()
+  "Large fonts"
+  (interactive)
+  (set-frame-font "Comic Code Daniel-16"))
 (defun super-large-fonts2 ()
   "Super large fonts"
   (interactive)
