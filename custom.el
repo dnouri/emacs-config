@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(grep-find-command
-   "find -L . -not -path \"*.svn*\" -not -path \"*.pt.py\" -not -path \"*compressed*\" -type f -print0 | xargs -0 -e grep -n -e ")
+   "find -L . -not -path \"*.venv*\" -not -path \"*venv*\" -not -path \"build/\" -type f -print0 | xargs -0 -e grep -n -e ")
  '(magit-diff-use-overlays nil)
  '(make-backup-files nil)
  '(menu-bar-mode t)
