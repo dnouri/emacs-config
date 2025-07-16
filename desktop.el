@@ -76,34 +76,5 @@
 (global-set-key (kbd "C-<tab>") 'dabbrev-expand)
 (define-key minibuffer-local-map (kbd "C-<tab>") 'dabbrev-expand)
 
-;; Emacs Client / Server ------------------------------------------------------
-;; http://www.emacswiki.org/cgi-bin/wiki.pl?EmacsClient
-;; https://kanis.fr/svn/trunk/wk/lisp/emacs.d/ivan-server.el
-(defun ivan-server-start-filter-function (process output)
-  "Filter function for `ivan-server-start', which checks for an
- accessible Emacs process acting as a server by calling
- `emacsclient --eval t' as an external asynchronous
- process. Process output is filtered by this function which only
- calls `server-start' when no server is running"
-  (if (equal output "t\n")
-      (message "Not starting server, one instance already running...")
-    (server-start)))
-(defun ivan-server-start ()
-  "Call `server-start' only if no other accessible Emacs process
- is already acting as a server for client processes. Adapted from
- Stefan Monnier's code"
-  (let ((process-connection-type nil))
-    (set-process-filter (start-process "ivan-process" nil "emacsclient"
-                                       "--eval" "t")
-                        'ivan-server-start-filter-function)))
-(ivan-server-start)
-;;(add-hook 'after-init-hook 'server-start)
-(add-hook 'server-switch-hook
-	  (lambda nil
-	    (let ((server-buf (current-buffer)))
-	      (bury-buffer)
-	      (switch-to-buffer-other-frame server-buf))))
-(add-hook 'server-done-hook 'delete-frame)
-
 (if (file-exists-p "~/.emacs.d/mu4e.el")
     (load "~/.emacs.d/mu4e"))
