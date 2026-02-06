@@ -1,0 +1,25 @@
+# Installed packages (reproducible via package-install-selected-packages)
+elpa/
+
+# Compiled elisp
+*.elc
+eln-cache/
+
+# Generated state
+auto-save-list/
+eshell/
+games/
+transient/
+tramp-autosave/
+session.*
+ido.last
+ido.last~
+network-security.data
+tramp
+projects
+
+# Private config
+mu4e.el
+
+# Tool caches
+.aider*

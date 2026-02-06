@@ -1,0 +1,32 @@
+* Emacs Configuration
+
+Personal Emacs configuration. Clone to =~/.emacs.d= and start Emacs;
+packages install automatically on first launch.
+
+** Requirements
+
+- Emacs 29+
+- [[https://docs.astral.sh/ruff/][ruff]] for Python LSP (via eglot)
+
+** Files
+
+| File               | Description                                |
+|--------------------+--------------------------------------------|
+| =init.el=          | Main entry point, package setup, keybindings |
+| =custom.el=        | Emacs Customize settings, package list     |
+| =desktop.el=       | GUI mode: fonts, theme, display settings   |
+| =eat-config.el=    | Eat terminal emulator configuration        |
+| =theme-cleanup.el= | Auto-disable themes before loading new ones |
+| =pi-config.el=     | Pi coding agent integration                |
+| =my-menu.el=       | Personal menu bar entry                    |
+
+** Packages
+
+Defined in =custom.el= via =package-selected-packages=.  Installed
+automatically from MELPA on first launch.
+
+** Local packages
+
+=lib/= contains elisp libraries not available as packages.  Currently:
+
+- =tempbuf.el= — automatically clean up unused buffers
